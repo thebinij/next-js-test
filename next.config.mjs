@@ -1,4 +1,16 @@
+
+// import withBundleAnalyzer from '@next/bundle-analyzer'
+
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+    output: 'standalone'
+};
 
 export default nextConfig;
+// export default withBundleAnalyzer({
+//     ...nextConfig,
+//     enabled: process.env.ANALYZE === 'true',
+//     env: {
+//         NEXT_PUBLIC_ENV: 'production', //your next configs goes here
+//     },
+// })
