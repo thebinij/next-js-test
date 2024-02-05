@@ -1,67 +1,48 @@
-import ReactCountryFlag from 'react-country-flag';
-import axios from "axios"
-import { API_URL } from "@/utils/constants";
-import { Table } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
+import { httpPost } from "@/utils/httpUtils";
+import ReactCountryFlag from "react-country-flag";
 
-interface DataType {
-  key: string;
-  name: string;
-  age: number;
-  address: string;
-  tags: string[];
+async function getData() {
+  const result = await httpPost(
+    "/transaction-manager/v1/public/foreign-exchanges/search",
+    {}
+  );
+
+  return result?.data?.data;
 }
+
 const Forex = async () => {
-  const response = await axios.post(API_URL + '/transaction-manager/v1/public/foreign-exchanges/search', {})
-  const data = response?.data?.data?.data;
+  const data = await getData();
 
-  const col: ColumnsType<DataType> = [
-    {
-      title: 'Country',
-      dataIndex: 'country',
-      align: 'left',
-      fixed: true,
-    },
-    {
-      title: 'Exchange Rates',
-      dataIndex: 'exchange_rate',
-      align: 'center',
-      fixed: true,
-    }
-  ]
-
-  const dataSource = data?.map((index:number,item: any) => {
-    return {
-      country: (
-        <span style={{ fontSize: '10px' }}>
-          <ReactCountryFlag
-            countryCode={item?.ISO2}
-            svg
-            className="mr-2"
-            style={{ height: '1.8em', width: '1.8em' }}
-          />
-          {item?.country} {`(${item?.currency})`}
-        </span>
-      ),
-      exchange_rate: <span style={{ fontSize: '10px' }}> {item?.exchange_rate}</span>,
-    };
-  });
-
-  let tableProps: any = {
-    columns: col,
-    pagination: false,
-    dataSource: dataSource,
-    style: {
-      fontSize: '16px',
-    },
-    // scroll: { y: '459px' },
+  const renderTableRows = () => {
+    return data?.map((item: any) => (
+      <tr key={item?.country + item?.currency} style={{ height: "3em" }}>
+        <td style={{ textAlign: "left" }}>
+          <span>
+            <ReactCountryFlag
+              countryCode={item?.ISO2}
+              svg
+              className="m-2"
+              style={{ height: "1.8em", width: "1.8em" }}
+            />
+            {item?.country} ({item?.currency})
+          </span>
+        </td>
+        <td style={{ textAlign: "center" }}>{item?.exchange_rate}</td>
+      </tr>
+    ));
   };
 
   return (
-    <div className="exchange-rate">
-      <Table className="table-striped-rows" {...tableProps} />
-    </div>
+    <table className="w-full table-striped-rows ">
+      <thead className="text-white h-[3em]">
+        <tr className="bg-[#0054a0] ">
+          <th>Country</th>
+          <th>Exchange Rates</th>
+        </tr>
+      </thead>
+      <tbody>{renderTableRows()}</tbody>
+    </table>
   );
-}
+};
 
 export default Forex;

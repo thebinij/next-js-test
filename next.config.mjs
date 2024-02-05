@@ -1,9 +1,10 @@
-
 // import withBundleAnalyzer from '@next/bundle-analyzer'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    output: 'standalone'
+  // Enable source map if needed
+  productionBrowserSourceMaps: true,
+  // output: 'standalone'
 };
 
 export default nextConfig;

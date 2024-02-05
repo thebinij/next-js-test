@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { AntdRegistry } from "@ant-design/nextjs-registry";
-// import { Inter } from "next/font/google";
 import "./globals.css";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
+import { ThemeProvider } from "@/components/themeprovider";
 
 export const metadata: Metadata = {
   title: "CityRemit Japan",
@@ -15,11 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-      >
-        <AntdRegistry>
-        {children}
-        </AntdRegistry>
+      <body>
+        <ThemeProvider>
+          <AntdRegistry>{children}</AntdRegistry>
+        </ThemeProvider>
       </body>
     </html>
   );
