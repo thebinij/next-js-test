@@ -7,12 +7,12 @@
   --background-rgb: 214, 219, 220;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
     --background-rgb: 0, 0, 0;
   }
-}
+} */
 
 body {
   color: rgb(var(--foreground-rgb));
@@ -25,13 +25,14 @@ body {
   }
 }
 
-/* .table-striped-rows tr:nth-child(2n) td {
+.table-striped-rows tr:nth-child(2n) td {
   background-color: #fbfbfb !important;
 }
 .table-striped-rows thead {
   background-color: #f1f1f1 !important;
 }
 
+/* 
 .ant-table
   .ant-table-container
   .ant-table-content

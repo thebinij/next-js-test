@@ -2,9 +2,10 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  basePath: process.env.BASE_PATH || '/ssr',
   // Enable source map if needed
   productionBrowserSourceMaps: true,
-  // output: 'standalone'
+  output: 'standalone'
 };
 
 export default nextConfig;
